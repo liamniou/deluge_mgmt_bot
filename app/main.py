@@ -141,12 +141,14 @@ def add_new_torrent_by_file(message):
 @bot.message_handler(func=lambda m: True)
 def modify_torrent(message):
     deluge = TelegramDelugeClient(message.chat.id)
+    torrent_exists = None
     torrent_name = message.text
 
     torrents = deluge.parse_torrents()
     if torrents:
         for t in torrents:
             if t.name == torrent_name:
+                torrent_exists = True
                 markup = generate_markup()
                 msg = bot.reply_to(
                     message,
@@ -156,9 +158,10 @@ def modify_torrent(message):
                 bot.register_next_step_handler(
                     msg, lambda m: process_action(m, deluge, torrent_name)
                 )
-    bot.send_message(
-        message.chat.id, "Sorry, I don't know what to do with your message. Check /help"
-    )
+    if not torrent_exists:
+        bot.send_message(
+            message.chat.id, "Sorry, I don't know what to do with your message. Check /help"
+        )
 
 
 def process_action(message, torrent_client, torrent_name):
