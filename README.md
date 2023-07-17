@@ -26,7 +26,7 @@ $ docker build -t deluge_mgmt_bot_image .
 
 ### Start the container
 
-![Docker Image Version (latest semver)](https://img.shields.io/docker/v/:liamnou/:deluge_mgmt_bot)
+![Docker Image Version (latest semver)](https://img.shields.io/docker/v/liamnou/deluge_mgmt_bot)
 
 ```sh
 $ docker run -dit \
